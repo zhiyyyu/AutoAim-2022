@@ -1,0 +1,50 @@
+{
+  "camera": {
+    "device_type": 0,
+    "sn": "KE0200060400",
+    "video_path": "../src/utils/data/videos/blue4.avi",
+    "picture_path": "../src/utils/data/pictures/armors/",
+    "size": {
+      "height": 1024,
+      "width": 1280
+    },
+    "camera_param": {
+      "fx": 1272.6,
+      "fy": 1278.6,
+      "u0": 673.0,
+      "v0": 481.6,
+      "k1": -0.2062,
+      "k2": 0.0867,
+      "p1": 0,
+      "p2": 0,
+      "k3": 0,
+      "exposure_time": 2000,
+      "gain": 0,
+      "gamma": 2
+    },
+    "camera_trans": {
+      "x": 0,
+      "y": -0.05,
+      "z": 0.10
+    }
+  },
+  "serialport": {
+    "enable": 1,
+    "deviceName": "/dev/ttyUSB0"
+  },
+  "detector": {
+    "color": "red",
+    "thresh": 70
+  },
+  "debug": {
+      "enable": false,
+      "video": false,
+      "armor": false,
+      "save_step": 10,
+      "thresh": false,
+      "trajectory": {
+          "distance": false
+      },
+      "coord": false
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "autoaim",
+  "version": "1.0.0",
+  "working_directory": "${PROJECT_DIR}/cmake-build-debug",
+  "dependencies": {
+
+  }
+}
