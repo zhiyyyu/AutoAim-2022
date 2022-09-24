@@ -13,10 +13,10 @@ include_directories(
 
 add_library(armor_detector
         src/Detector.cpp
-        src/Classifier.cpp
         src/LightBarFinder.cpp
         src/ArmorFinder.cpp
-        src/Tracker.cpp
+        src/Classifier.cpp
+        src/CNN.cpp
         src/Score.cpp
         )
 

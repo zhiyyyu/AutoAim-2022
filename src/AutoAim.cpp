@@ -20,6 +20,26 @@ int main(int argc, char** argv){
     auto serial_port = new SerialPort(SerialParam::device_name);
     thread serial_port_thread(&SerialPort::read_data, serial_port, ref(params_to_serial_port));
 
+    // // auto second = std::chrono::steady_clock::now();
+    // while(true){
+    //     // double delta_t = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - second).count()/1000.0;
+    //     // if(delta_t < 1000){
+    //     //     SerialParam::send_data.time_stamp = 0;
+    //     //     serial_port->writeData(&SerialParam::send_data);
+    //     //     continue;
+    //     // }
+    //     // else second = std::chrono::steady_clock::now();
+    //     // auto zero = std::chrono::steady_clock::now();
+    //     SerialParam::send_data.time_stamp = 1;
+    //     SerialParam::send_data.yaw = 100;
+    //     // DLOG(INFO) << "send: " << delta_t;
+    //     serial_port->writeData(&SerialParam::send_data);
+    //     // while(SerialParam::recv_data.time_stamp == 0);
+    //     // DLOG(INFO) << SerialParam::recv_data.time_stamp;
+    //     // if(SerialParam::recv_data.time_stamp) 
+    //     // DLOG(INFO) << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - zero).count()/1000.0;
+    // }
+
     /******* init camera ********/
     ly::VideoCapture* video;
     video->chooseCameraType(video);
@@ -34,7 +54,7 @@ int main(int argc, char** argv){
    /******** init video writer ****/
    if(GlobalParam::SAVE_VIDEO){
         auto saver = new VideoSaver();
-        thread saver_thread(&VideoSaver::SaveVideo, saver, params_to_video.frame_p);
+        thread saver_thread(&VideoSaver::SaveVideo, saver, params_to_video.frame_pp);
         saver_thread.join();
    }
 

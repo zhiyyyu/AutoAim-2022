@@ -1,11 +1,27 @@
 # AutoAim
-Automatic Aiming Program for Hero Robot in RM Powered by HUST.
+华中科技大学狼牙战队2022年英雄视觉代码
 
-# TODOLIST
+# Dependence
 
-新版坐标变换:ok:
-辅瞄跟随
-建立装甲板id到armors的哈希，用于预测，每隔2秒未检测到就清空
-辅瞄预测
-DEBUG模式保存装甲板图片用于训练SVM
-创建新线程录制视频
+* Ceres
+* Eigen
+* OpenCV
+* Sophus
+* jsoncpp
+
+# Build
+
+```sh
+mkdir build
+cmake ..
+make -j4
+./AutoAim
+```
+
+# 功能清单
+
+* init.json配置文件初始化
+* c++11 thread多线程 + 条件变量、互斥锁同步线程
+* 神经网络分类器
+* 卡尔曼滤波可视化调参
+* 前哨站模式（瞄准圆心、计算下一块装甲到达时间）

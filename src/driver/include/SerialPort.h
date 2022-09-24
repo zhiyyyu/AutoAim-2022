@@ -8,6 +8,7 @@
 #include <boost/asio.hpp>
 #include <string>
 #include <vector>
+#include <cstdio>
 
 #include "Log.h"
 
@@ -39,27 +40,34 @@ namespace ly{
     };
 
     #pragma pack(push, 1)
-    struct SerialPortData{  // 顺序最好别改
+    struct SerialPortData{
         unsigned char startflag;
         unsigned char flag;
         int yaw;
         short pitch;
-        unsigned char shootflag;
+        unsigned char color;
+        int time_stamp;
+        short roll;
+        unsigned char right_clicked;
         unsigned char crc;
 
         SerialPortData(){
 
         }
-        SerialPortData(SerialPortData *pData) {
+        SerialPortData(const SerialPortData& data) {
+            this->yaw = data.yaw; this->pitch = data.pitch;
         }
     };
     #pragma pack(pop)
     #pragma pack(push, 1)
-    struct SerialPortWriteData{  // 顺序最好别改
+    struct SerialPortWriteData{
         unsigned char startflag;
-        unsigned char shootStatus = 0;
         int yaw;
         short pitch;
+        unsigned char shootStatus;
+        int time_stamp;
+        unsigned char state;
+        unsigned char num;
         unsigned char crc;
 
         SerialPortWriteData(){
@@ -69,12 +77,6 @@ namespace ly{
         }
     };
     #pragma pack(pop)
-
-    struct EularAngles{
-        double roll;
-        double pitch;
-        double yaw;
-    };
 
     struct Params_ToSerialPort{
         SerialPortData* data;
@@ -98,14 +100,13 @@ namespace ly{
         serial_port* _serial_port;
         io_service _io_service;
         int _data_len = sizeof(SerialPortData);
-        int _data_len_write = sizeof(SerialPortWriteData);
+        int _data_len_write = sizeof(SerialPortWriteData)+1;
         unsigned char msg[sizeof(SerialPortWriteData)];
         
         uint8_t* _data_tmp;
         uint8_t* pingpong;
         Params_ToSerialPort thread_params;
         boost::system::error_code _err;
-        EularAngles angles;
 
         SerialPortData stm32;
         bool BeginTime_Flag = false;

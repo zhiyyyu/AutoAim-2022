@@ -26,7 +26,8 @@ namespace ly{
         Rect rect;
         vector<Point2f> corners;
         int _class;
-//        int id;
+        double angle;
+        double x, y, z;
     };
 
     typedef vector<ArmorBlob> ArmorBlobs;
@@ -36,7 +37,8 @@ namespace ly{
         bool judgeArmor(const ArmorBlob&);
         bool matchTwoLightBar(const RotatedRect&, const RotatedRect&);
         bool getArmor(const RotatedRect&, const RotatedRect&, ArmorBlob& armor);
-        Rect getScaleArmorToRoi(const Rect& );
+        Rect getScaleArmorToRoi(const Rect&);
+        vector<int> getExtreme(const ArmorBlob&);
     private:
         inline float getAngle(const RotatedRect&);
         inline bool checkAngleDiff(const RotatedRect& l, const RotatedRect& r);
@@ -44,6 +46,7 @@ namespace ly{
         inline bool checkHeightMatch(const RotatedRect& l, const RotatedRect& r);
         inline bool checkHorizontalDistance(const RotatedRect& l, const RotatedRect& r);
         inline bool checkDislocation(const RotatedRect& l, const RotatedRect& r);
+        // inline bool checkRatio(const RotatedRect& l, const RotatedRect& r);
     };
 }
 

@@ -22,11 +22,4 @@ namespace ly{
     const string confog_file_path = "../src/utils/tools/init.json";
 }
 
-typedef struct{
-    cv::Mat mat;
-    SerialPortData receiveData_;
-    std::chrono::steady_clock::time_point Camtime_start; //获取照片读取的时间戳
-    clock_t time;
-} ly_Mat;
-
 #endif //AUTOAIM_AUTOAIM_H

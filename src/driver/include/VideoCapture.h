@@ -30,27 +30,32 @@ namespace ly
         Picture,
     };
 
+    class Image
+    {
+    public:
+        Mat* mat;
+        std::chrono::steady_clock::time_point time_stamp;
+        SerialPortData imu_data;
+    };
+
     struct Params_ToVideo
     {
         cv::VideoCapture video;
-        //        uint8_t* id;
-        Mat **frame_p;
+        Image **frame_pp;
         void *__this;
-        std::chrono::steady_clock::time_point *time_stamp;
         VideoWriter writer;
 
         Params_ToVideo()
         {
-            //            id = new uint8_t;
-            frame_p = (Mat **)malloc(sizeof(Mat *));
-            *frame_p = new Mat();
-            time_stamp = new std::chrono::steady_clock::time_point;
+            frame_pp = (Image **)malloc(sizeof(Image *));
+            *frame_pp = new Image();
         }
         ~Params_ToVideo(){
-            free(*frame_p);
-            free(frame_p);
+            free(*frame_pp);
+            free(frame_pp);
         }
     };
+
     /**
      * @brief:
      */
@@ -101,10 +106,8 @@ namespace ly
     public:
         explicit NativeVideo();
         ~NativeVideo();
-        //        explicit NativeVideo(const string& path);
         void open() override;
         void startCapture(Params_ToVideo &params) override;
-        //        void startCapture(Params_ToVideo &params_to_video) override;
 
     private:
         cv::VideoCapture video;

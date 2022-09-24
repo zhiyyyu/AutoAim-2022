@@ -19,8 +19,6 @@
 #include "armor_detector/include/Score.h"
 
 namespace ly{
-//    void train();
-
     string picRoot = "../src/utils/data/pictures/armors";
 }
 

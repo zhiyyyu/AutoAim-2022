@@ -31,9 +31,10 @@ namespace ly{
     private:
         static inline bool checkAspectRatio(double);
         static inline bool checkArea(double);
-        static inline bool checkAngle(double);
+        static inline bool checkAngle(const RotatedRect&);
 
-        Mat kernel;
+        Mat kernel1;
+        Mat kernel2;
     };
 }
 

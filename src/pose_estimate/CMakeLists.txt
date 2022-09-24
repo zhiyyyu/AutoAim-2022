@@ -1,4 +1,6 @@
-#find_package()
+find_package(Ceres REQUIRED)
+
+include_directories(${CERES_INCLUDE_DIRS})
 
 include_directories(
         include
@@ -16,4 +18,5 @@ add_library(pose_estimate
 target_link_libraries(pose_estimate
         utils
         /usr/local/lib/libSophus.so
+        ${CERES_LIBRARIES}
         )

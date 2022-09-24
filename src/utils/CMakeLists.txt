@@ -4,7 +4,7 @@ find_package(OpenCV REQUIRED)
 include_directories(
         include
         ${OpenCV_INCLUDE_DIRS}
-	/usr/local/include/glog
+	    /usr/local/include/glog
 )
 
 add_library(utils
@@ -16,7 +16,7 @@ add_library(utils
 
 target_link_libraries(utils
         #-lglog
-	/usr/local/lib/libglog.so
+	    /usr/local/lib/libglog.so
         -ljsoncpp
         ${OpenCV_LIBS}
         )

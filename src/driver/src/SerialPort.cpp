@@ -13,14 +13,13 @@ namespace ly
             try
             {
                 this->readData(params.data);
-                // DLOG(INFO) << "                                           recv yaw: " << SerialParam::recv_data.yaw << "  recv pitch: " << SerialParam::recv_data.pitch;
             }
             catch (...)
             {
                 DLOG(ERROR) << "catch an error in SerialPort::read_data";
                 break;
             }
-            usleep(5000);
+            usleep(1000);   // 200 fps
         }
         return;
     }
@@ -143,10 +142,22 @@ namespace ly
                 if (verifyCRC(reinterpret_cast<SerialPortData *>(_data_tmp))) //CRC校验
                 {
                     imu_data->flag = _data_tmp[1];
-                    imu_data->pitch = (_data_tmp[2] << 8) | _data_tmp[3];
-                    imu_data->yaw = (((int)_data_tmp[4]) << 24) | (((int)_data_tmp[5]) << 16) | (((int)_data_tmp[6]) << 8) |
-                                    (_data_tmp[7]);
-                    imu_data->shootflag = _data_tmp[8];
+                    imu_data->pitch = (_data_tmp[2] << 8) 
+                                    | _data_tmp[3];
+                    imu_data->yaw = (((int)_data_tmp[4]) << 24) 
+                                    | (((int)_data_tmp[5]) << 16) 
+                                    | (((int)_data_tmp[6]) << 8) 
+                                    | (_data_tmp[7]);
+                    imu_data->color = _data_tmp[8];
+                    imu_data->time_stamp = (((int)_data_tmp[9]) << 24) 
+                                    | (((int)_data_tmp[10]) << 16) 
+                                    | (((int)_data_tmp[11]) << 8) 
+                                    | (_data_tmp[12]);
+                    imu_data->roll = (_data_tmp[13] << 8) 
+                                    | _data_tmp[14];
+                    imu_data->right_clicked = _data_tmp[15];
+                    
+                    // DLOG(INFO) << "size of recv: " << _data_len << " right: " << imu_data->right_clicked << " " << _data_tmp[15] << " end";
                     // DLOG(INFO) << "readData: yaw " << imu_data->yaw << " pitch " << imu_data->pitch;
                     break;
                 }
@@ -168,8 +179,19 @@ namespace ly
         msg[5] = tmp[2];
         msg[6] = tmp[1];
         msg[7] = tmp[0];
+
+        msg[8] = _data_write->shootStatus;
+
+        tmp = (unsigned char *)(&_data_write->time_stamp);
+        msg[9] = tmp[3];
+        msg[10] = tmp[2];
+        msg[11] = tmp[1];
+        msg[12] = tmp[0];
+
+        msg[13] = _data_write->state;
+        msg[14] = _data_write->num;
+
         addCRC(msg);
-        
         serialPortWrite(msg, _data_len_write);
     }
 }

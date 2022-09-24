@@ -11,14 +11,15 @@
 #include "Log.h"
 #include "Params.h"
 #include "LightBarFinder.h"
-#include "Tracker.h"
 #include "ArmorFinder.h"
 #include "../../driver/include/SerialPort.h"
 #include "../../driver/include/VideoCapture.h"
 #include "Score.h"
 #include "Thread.h"
+#include "Classifier.h"
 #include "../../pose_estimate/include/PoseSolver.h"
 #include "../../pose_estimate/include/Predictor.h"
+// #include <stdlib.h>
 
 using namespace cv;
 
@@ -28,22 +29,21 @@ namespace ly{
 //    const Scalar hsv_blue_high_boundary = Scalar (124, 255, 255);
 
     struct Params_ToDetector{
-        Mat** frame_p;
+        Image** frame_pp;
         SerialPortData* SerialPortData_; //传出的串口数据
-        std::chrono::steady_clock::time_point* time_stamp;
-        Mat* armor;
+        // std::chrono::steady_clock::time_point* time_stamp;
+        // Mat* armor;
         bool is_update;
 
         Params_ToDetector(){
 //            id = new uint8_t;
-            frame_p = nullptr;
-            armor = new Mat();
+            frame_pp = nullptr;
+            // armor = new Mat();
             // cache_idx = new uint8_t ;
 	        SerialPortData_ = new SerialPortData();
             is_update = false;
         }
     };
-
 
     class Detector {
     public:
@@ -51,6 +51,7 @@ namespace ly{
         ~Detector() = default;
         void setParams(const Params_ToVideo &params_to_video, const Params_ToSerialPort &params_to_serial_port);
         void startDetect(const Params_ToDetector &params, SerialPort* SerialPort_);
+        void outpostMode();
 
     private:
         inline void calcGammaTable(float gamma);

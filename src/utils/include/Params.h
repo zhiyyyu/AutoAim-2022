@@ -22,6 +22,7 @@ namespace ly{
         static double gain;
         static float gamma;
         
+        static int camera_type;
         static double fx; 
         static double fy;
         static double u0;
@@ -34,6 +35,9 @@ namespace ly{
         static double camera_trans_x;
         static double camera_trans_y;
         static double camera_trans_z;
+
+        static double height;
+        static double width;
     };
 
     class DetectorParam{
@@ -48,6 +52,8 @@ namespace ly{
         static string device_name;
         static SerialPortData recv_data;
         static SerialPortWriteData send_data;
+        static vector<SerialPortData> serial_data_sets;
+        static int set_id;
     };
 
     class GlobalParam{
@@ -58,6 +64,30 @@ namespace ly{
         static bool SHOW_THRESH;
         static int save_step;
         static bool SHOW_COORD;
+        static bool SOCKET;
+    };
+
+    typedef enum {
+        AUTOAIM,
+        OUTPOST,
+        SENTINEL,
+        ANTITOP,
+    } STATE;
+
+    typedef enum {
+        HERO,
+        SENTRY,
+        ENGINEER,
+    } PRI;
+
+    class StateParam{
+    public:
+        static STATE state;
+    };
+
+    class TimeSystem{
+    public:
+        static std::chrono::steady_clock::time_point time_zero;
     };
 }
 

@@ -2,10 +2,11 @@
 
 sec=5
 cnt=0
-path=/home/zhiyu/AIM_HUST/AutoAim/cmake-build-debug/
+path=/home/zhiyu/AutoAim/build/
 name=AutoAim
 cd $path
-# make clean && make -j
+./$name	&
+# make clean && make -j4
 while [ 1 ]
 do
 count=`ps -ef | grep $name | grep -v "/home" | grep -v "grep" | wc -l`
@@ -21,7 +22,8 @@ else
 	chmod +x /dev/ttyUSB0
 
    	cd $path
-   	./$name	&
+   	# make clean && make -j4
+	./$name	&
    	echo "$name has started!"		
 	sleep $sec
 

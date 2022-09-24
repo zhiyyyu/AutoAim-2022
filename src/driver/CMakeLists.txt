@@ -12,6 +12,9 @@ add_library(driver
         src/VideoCapture.cpp
         src/GxCamera.cpp
         src/VideoSaver.cpp
+        src/Picture.cpp
+        src/DaHen.cpp
+        src/Video.cpp
 )
 
 target_link_libraries(driver

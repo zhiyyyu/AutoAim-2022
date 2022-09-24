@@ -5,10 +5,12 @@
 #include "Thread.h"
 
 namespace ly{
-    bool Thread::image_is_update;
+    bool Thread::image_is_update = false;
 
     condition_variable Thread::cond_is_update;
+    condition_variable Thread::cond_is_process;
 
+    // mutex Thread::mtx;
     mutex Thread::mtx_image;
     mutex Thread::mtx_video;
 }

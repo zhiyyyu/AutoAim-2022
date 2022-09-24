@@ -1,43 +1,69 @@
 //
-// Created by zhiyu on 2021/8/20.
+// Created by narrow on 2022/4/24.
 //
 
-#ifndef AUTOAIM_CLASSIFIER_H
-#define AUTOAIM_CLASSIFIER_H
+#ifndef CLS_DEMO_CLASSIFIER_H
+#define CLS_DEMO_CLASSIFIER_H
 
 #include "opencv2/opencv.hpp"
-
 #include "Log.h"
-#include "Detector.h"
+#include <vector>
 
 using namespace cv;
+using namespace std;
 
 namespace ly{
-    void* getArmorID(void* params_p);
-
-    struct Params_ToClassifier{
-        Mat* armor;
-        uint8_t * armor_class;
-
-        Params_ToClassifier(){
-            armor = new Mat();
-            armor_class = new uint8_t;
-        }
-    };
 
     class Classifier {
     public:
-        explicit Classifier() = default;
-        ~Classifier() = default;
-        void setParams(const Params_ToDetector &params_to_detector);
-        void startClassify(Params_ToClassifier &parmas_to_classifier);
+        virtual int predict(const Mat& frame) = 0;
+        virtual void train() = 0;
+    };
 
-        static Ptr<ml::SVM> svm_model;
+    class NSVM : public Classifier {
+    public:
+        NSVM();
+        int predict(const Mat& frame) override;
+        void train() override;
+        const Mat& getArmor();
 
     private:
-        Params_ToClassifier thread_params;
-        pthread_t threadID{};
+        Ptr<ml::SVM> svm;
+        Ptr<CLAHE> clahe;
 
+        Mat armor;
+        Mat final;
+        Mat cls;
+        int thresh; // unused
+        uchar gamma_table[256];
+    };
+
+    class FSVM : public Classifier {
+    public:
+        FSVM();
+        int predict(const Mat& frame) override;
+        void train() override;
+        const Mat& getArmor();
+
+    private:
+        Ptr<ml::SVM> svm;
+        HOGDescriptor hog;
+
+        Mat armor;
+        vector<float> decs;
+    };
+
+    class CNN : public Classifier {
+    public:
+        CNN();
+        int predict(const Mat& frame) override;
+        void train() override;
+
+    private:
+        void softmax(Mat& mat);
+        // string model = "../src/utils/tools/armor.bak.onnx";
+        string model = "../src/utils/tools/model.onnx";
+        dnn::Net net;
     };
 }
 

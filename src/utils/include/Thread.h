@@ -21,8 +21,9 @@ namespace ly
         static bool image_is_update;
  
         static condition_variable cond_is_update;
-        static condition_variable cond_not_update;
+        static condition_variable cond_is_process;
 
+        // static mutex mtx;
         static mutex mtx_image;
         static mutex mtx_video;
     };
